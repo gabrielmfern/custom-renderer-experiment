@@ -113,7 +113,12 @@ declare module "react-server" {
       boundary: SuspenseInstance,
     ): boolean;
 
-    writePreamble(): void;
+    writePreamble(
+      destination: Destination,
+      resumableState: ResumableState,
+      renderState: RenderState,
+      willFlushAllSegments: boolean,
+    ): void;
     writeHoistables(): void;
     writeHoistablesForBoundary(): void;
     writePostamble(): void;

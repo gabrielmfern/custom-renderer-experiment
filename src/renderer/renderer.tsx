@@ -1,5 +1,6 @@
 import ReactServer from "react-server";
 import { propToHtmlAttribute } from "./attribute-processing/prop-to-html-attribute";
+import { escapeTextForBrowser } from "./escape-html";
 
 class Destination {
   html: string;
@@ -91,7 +92,7 @@ const Renderer = ReactServer<Destination, null, null, null, number>({
   completeResumableState() {},
 
   pushTextInstance(target, text, renderState, textEmbedded) {
-    target.push(encoder.encode(text));
+    target.push(encoder.encode(escapeTextForBrowser(text)));
     return true;
   },
   pushStartInstance(target, type, props) {
@@ -138,7 +139,7 @@ const Renderer = ReactServer<Destination, null, null, null, number>({
       typeof children === "boolean" ||
       typeof children === "bigint"
     ) {
-      target.push(encoder.encode("" + children));
+      target.push(encoder.encode(escapeTextForBrowser("" + children)));
       return null;
     }
     return children;
@@ -199,7 +200,7 @@ const Renderer = ReactServer<Destination, null, null, null, number>({
   writeStartSegment(destination, renderState, formatContext, id): boolean {
     return true;
   },
-  writeEndSegment(destination: Destination, formatContext: null): boolean {
+  writeEndSegment(destination, formatContext): boolean {
     return true;
   },
 
@@ -215,7 +216,11 @@ const Renderer = ReactServer<Destination, null, null, null, number>({
     return true;
   },
 
-  writePreamble() {},
+  writePreamble(destination) {
+    destination.write(
+      '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">',
+    );
+  },
   writeHoistables() {},
   writeHoistablesForBoundary() {},
   writePostamble() {},
