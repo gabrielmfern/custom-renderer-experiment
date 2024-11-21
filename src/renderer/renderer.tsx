@@ -43,21 +43,6 @@ class Destination {
 
 const encoder = new TextEncoder();
 
-// Suspense boundaries are encoded as comments.
-const startCompletedSuspenseBoundary = "<!--$-->";
-const startPendingSuspenseBoundary1 = '<!--$?--><template id="';
-const startPendingSuspenseBoundary2 = '"></template>';
-const startClientRenderedSuspenseBoundary = "<!--$!-->";
-const endSuspenseBoundary = "<!--/$-->";
-
-const clientRenderedSuspenseBoundaryError1 = "<template";
-const clientRenderedSuspenseBoundaryErrorAttrInterstitial = '"';
-const clientRenderedSuspenseBoundaryError1A = ' data-dgst="';
-const clientRenderedSuspenseBoundaryError1B = ' data-msg="';
-const clientRenderedSuspenseBoundaryError1C = ' data-stck="';
-const clientRenderedSuspenseBoundaryError1D = ' data-cstck="';
-const clientRenderedSuspenseBoundaryError2 = "></template>";
-
 const Renderer = ReactServer<Destination, null, null, null, number>({
   scheduleMicrotask(callback) {
     queueMicrotask(() => callback());
