@@ -1,0 +1,19 @@
+{
+  "name": "custom-renderer-experiment",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/react": "18.3.12",
+    "@types/react-reconciler": "0.28.8"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@react-email/components": "0.0.28",
+    "react": "19.0.0-rc-64f89510-20241119",
+    "react-reconciler": "^0.29.2",
+    "react-server": "./react-server"
+  }
+}
