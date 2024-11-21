@@ -1,3 +1,4 @@
+import { escapeTextForBrowser } from "../escape-html";
 import type { PropValue } from "./prop-to-html-attribute";
 
 export function stringPropToHtmlAttribute(name: string, value: PropValue) {
@@ -6,7 +7,7 @@ export function stringPropToHtmlAttribute(name: string, value: PropValue) {
     typeof value !== "symbol" &&
     typeof value !== "boolean"
   ) {
-    return ` ${name}="${value}"`;
+    return ` ${name}="${escapeTextForBrowser(value)}"`;
   }
   return "";
 }

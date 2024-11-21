@@ -1,3 +1,4 @@
+import { escapeTextForBrowser } from "../escape-html";
 import { booleanPropToHtmlAttribute } from "./boolean-prop-to-html-attribute";
 import { getAttributeAlias } from "./get-attribute-alias";
 import { isAttributeNameSafe } from "./is-attribute-name-safe";
@@ -50,7 +51,7 @@ export function propToHtmlAttribute(name: string, value: PropValue): string {
       ) {
         return "";
       }
-      return ` xlink:href="${"" + value}"`;
+      return ` xlink:href="${escapeTextForBrowser(value)}"`;
     }
     case "contentEditable":
     case "spellCheck":
@@ -65,7 +66,7 @@ export function propToHtmlAttribute(name: string, value: PropValue): string {
       // In React, we let users pass `true` and `false` even though technically
       // these aren't boolean attributes (they are coerced to strings).
       if (typeof value !== "function" && typeof value !== "symbol") {
-        return ` ${name}="${value}"`;
+        return ` ${name}="${escapeTextForBrowser(value)}"`;
       }
       return "";
     }
@@ -106,7 +107,7 @@ export function propToHtmlAttribute(name: string, value: PropValue): string {
       } else if (value === false) {
         // Ignored
       } else if (typeof value !== "function" && typeof value !== "symbol") {
-        return ` ${name}="${value}"`;
+        return ` ${name}="${escapeTextForBrowser(value)}"`;
       }
       return "";
     }
@@ -121,7 +122,7 @@ export function propToHtmlAttribute(name: string, value: PropValue): string {
         !isNaN(value as number) &&
         (value as number) >= 1
       ) {
-        return ` ${name}="${value}"`;
+        return ` ${name}="${escapeTextForBrowser(value)}"`;
       }
       return "";
     }
@@ -133,28 +134,28 @@ export function propToHtmlAttribute(name: string, value: PropValue): string {
         typeof value !== "symbol" &&
         !isNaN(value as number)
       ) {
-        return ` ${name}="${value}"`;
+        return ` ${name}="${escapeTextForBrowser(value)}"`;
       }
       return "";
     }
     case "xlinkActuate":
-      return stringPropToHtmlAttribute("xlink:actuate", value);
+      return stringPropToHtmlAttribute("xlink:actuate", escapeTextForBrowser(value));
     case "xlinkArcrole":
-      return stringPropToHtmlAttribute("xlink:arcrole", value);
+      return stringPropToHtmlAttribute("xlink:arcrole", escapeTextForBrowser(value));
     case "xlinkRole":
-      return stringPropToHtmlAttribute("xlink:role", value);
+      return stringPropToHtmlAttribute("xlink:role", escapeTextForBrowser(value));
     case "xlinkShow":
-      return stringPropToHtmlAttribute("xlink:show", value);
+      return stringPropToHtmlAttribute("xlink:show", escapeTextForBrowser(value));
     case "xlinkTitle":
-      return stringPropToHtmlAttribute("xlink:title", value);
+      return stringPropToHtmlAttribute("xlink:title", escapeTextForBrowser(value));
     case "xlinkType":
-      return stringPropToHtmlAttribute("xlink:type", value);
+      return stringPropToHtmlAttribute("xlink:type", escapeTextForBrowser(value));
     case "xmlBase":
-      return stringPropToHtmlAttribute("xml:base", value);
+      return stringPropToHtmlAttribute("xml:base", escapeTextForBrowser(value));
     case "xmlLang":
-      return stringPropToHtmlAttribute("xml:lang", value);
+      return stringPropToHtmlAttribute("xml:lang", escapeTextForBrowser(value));
     case "xmlSpace":
-      return stringPropToHtmlAttribute("xml:space", value);
+      return stringPropToHtmlAttribute("xml:space", escapeTextForBrowser(value));
     default:
       if (
         // shouldIgnoreAttribute
@@ -180,7 +181,7 @@ export function propToHtmlAttribute(name: string, value: PropValue): string {
             }
           }
         }
-        return ` ${name}="${value}"`;
+        return ` ${name}="${escapeTextForBrowser(value)}"`;
       }
   }
   return "";

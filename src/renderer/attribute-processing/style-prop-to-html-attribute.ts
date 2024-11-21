@@ -7,7 +7,7 @@ export function stylePropToHtmlAttribute(style: PropValue) {
     throw new Error(
       "The `style` prop expects a mapping from style properties to values, " +
         "not a string. For example, style={{marginRight: spacing + 'em'}} when " +
-        "using JSX."
+        "using JSX.",
     );
   }
 
@@ -42,5 +42,5 @@ export function stylePropToHtmlAttribute(style: PropValue) {
     }
     styles.push(`${nameChunk}:${valueChunk}`);
   }
-  return ` style="${styles.join(";")}"`;
+  return ` style="${styles.join(";").replaceAll('"', "'")}"`;
 }

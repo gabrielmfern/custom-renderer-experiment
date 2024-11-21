@@ -59,7 +59,9 @@ function escapeHtml(string: string) {
  * @param {*} text Text value to escape.
  * @return {string} An escaped string.
  */
-export function escapeTextForBrowser(text: string | number | boolean): string {
+export function escapeTextForBrowser(text: string | number | boolean | Object): string {
+  if (typeof text === "object") return JSON.stringify(text);
+
   if (
     typeof text === "boolean" ||
     typeof text === "number" ||
