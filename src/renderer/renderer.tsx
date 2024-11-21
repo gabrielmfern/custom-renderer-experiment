@@ -62,7 +62,9 @@ const Renderer = ReactServer<Destination, null, null, null, number>({
     queueMicrotask(() => callback());
   },
   scheduleWork(callback) {
-    callback();
+    setTimeout(() => {
+      callback();
+    });
   },
   beginWriting(destination) {},
   writeChunk(destination, buffer) {
@@ -165,92 +167,32 @@ const Renderer = ReactServer<Destination, null, null, null, number>({
     target.push(encoder.encode(`</${type}>`));
   },
 
-  // This is a noop in ReactNoop
-  pushSegmentFinale(target, _, lastPushedText, textEmbedded) {
-    if (lastPushedText && textEmbedded) {
-      target.push(encoder.encode(`<!-- -->`));
-    }
-  },
+  pushSegmentFinale(target, _, lastPushedText, textEmbedded) {},
 
   writeCompletedRoot() {
     return true;
   },
 
-  writePlaceholder(destination, _, id) {
-    destination.write(`<template id="`);
-    destination.write(id.toString(16));
-    destination.write(`></template>`);
+  writePlaceholder() {
     return true;
   },
 
-  writeStartCompletedSuspenseBoundary(
-    destination,
-    renderState,
-    suspenseInstance,
-  ) {
-    destination.write(startCompletedSuspenseBoundary);
+  writeStartCompletedSuspenseBoundary() {
     return true;
   },
-  writeStartPendingSuspenseBoundary(
-    destination,
-    renderState,
-    suspenseInstance,
-  ): boolean {
-    destination.write(startPendingSuspenseBoundary1);
-
-    if (suspenseInstance === null) {
-      throw new Error(
-        "An ID must have been assigned before we can complete the boundary.",
-      );
-    }
-
-    destination.write(suspenseInstance.toString(16));
-    destination.write('"></template>');
+  writeStartPendingSuspenseBoundary() {
     return true;
   },
-  writeStartClientRenderedSuspenseBoundary(
-    destination,
-    _,
-    errorDigest,
-    errorMessage,
-    errorStack,
-    errorComponentStack,
-  ) {
-    destination.write("<!--$!-->");
-    destination.write("<template");
-    if (errorDigest) {
-      destination.write(clientRenderedSuspenseBoundaryError1A);
-      destination.write(errorDigest);
-      destination.write(clientRenderedSuspenseBoundaryErrorAttrInterstitial);
-    }
-    if (errorMessage) {
-      destination.write(clientRenderedSuspenseBoundaryError1B);
-      destination.write(errorMessage);
-      destination.write(clientRenderedSuspenseBoundaryErrorAttrInterstitial);
-    }
-    if (errorStack) {
-      destination.write(clientRenderedSuspenseBoundaryError1C);
-      destination.write(errorStack);
-      destination.write(clientRenderedSuspenseBoundaryErrorAttrInterstitial);
-    }
-    if (errorComponentStack) {
-      destination.write(clientRenderedSuspenseBoundaryError1D);
-      destination.write(errorComponentStack);
-      destination.write(clientRenderedSuspenseBoundaryErrorAttrInterstitial);
-    }
-    destination.write(clientRenderedSuspenseBoundaryError2);
+  writeStartClientRenderedSuspenseBoundary() {
     return true;
   },
   writeEndCompletedSuspenseBoundary(destination) {
-    destination.write(endSuspenseBoundary);
     return true;
   },
   writeEndPendingSuspenseBoundary(destination) {
-    destination.write(endSuspenseBoundary);
     return true;
   },
   writeEndClientRenderedSuspenseBoundary(destination) {
-    destination.write(endSuspenseBoundary);
     return true;
   },
 
@@ -265,20 +207,11 @@ const Renderer = ReactServer<Destination, null, null, null, number>({
     return true;
   },
 
-  writeCompletedBoundaryInstruction(
-    destination,
-    renderState,
-    boundary,
-    contentSegmentID,
-  ): boolean {
+  writeCompletedBoundaryInstruction() {
     return true;
   },
 
-  writeClientRenderBoundaryInstruction(
-    destination,
-    renderState,
-    boundary,
-  ): boolean {
+  writeClientRenderBoundaryInstruction() {
     return true;
   },
 
