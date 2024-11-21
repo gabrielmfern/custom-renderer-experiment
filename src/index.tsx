@@ -13,12 +13,13 @@ const randomUserPromise = fetch("https://randomuser.me/api/").then((res) =>
   res.json(),
 );
 
-function SuspendingComponent() {
+function SuspendingComponent(props: { children?: React.ReactNode }) {
   const user = React.use(randomUserPromise);
 
   return (
     <pre>
       <code>{JSON.stringify(user)}</code>
+      {props.children}
     </pre>
   );
 }
@@ -29,7 +30,15 @@ console.log(
 </React.Suspense>\n`,
   await render(
     <React.Suspense>
-      <SuspendingComponent />
+      <SuspendingComponent>
+        <SuspendingComponent>
+          <SuspendingComponent>
+            <SuspendingComponent></SuspendingComponent>
+            <SuspendingComponent></SuspendingComponent>
+          </SuspendingComponent>
+          <SuspendingComponent></SuspendingComponent>
+        </SuspendingComponent>
+      </SuspendingComponent>
     </React.Suspense>,
   ),
 );
